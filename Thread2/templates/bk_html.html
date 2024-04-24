@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> flask websocket</title>
+</head>
+<body>
+<div class="div">
+    <img id="image1">
+
+    <form id="start" method="POST" action="#">
+            <input type="submit" value="start">
+        </form>
+
+    <form id="stop" method="POST" action="#">
+            <input type="submit" value="stop">
+        </form>
+</div>
+
+    <div class="div1">
+    <! PICTURE 2       !>
+    <img id="image2">
+<form id="start1" method="POST" action="#">
+    <input type="submit" value="start1">
+    </form>
+
+<form id="stop1" method="POST" action="#">
+        <input type="submit" value="stop1">
+    </form>
+
+</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+     var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+     socket.on('connect' ,function()
+     {
+     	socket.emit('check' ,{data: 'User Connected'})
+     });
+     socket.on('image', function(msg)
+     {  
+        //console.log(image)
+        const image_element=document.getElementById('image1');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+     socket.on('image2', function(msg)
+     {
+        //console.log(image2)
+        const image_element=document.getElementById('image2');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+
+ </script>
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('form#start').submit(function(event) {
+                socket.emit('start');
+                return false;
+            });
+
+
+            $('form#stop').submit(function(event) {
+                socket.emit('stop');
+                return false;
+            });
+
+
+
+            $('form#start1').submit(function(event) {
+                socket.emit('start1');
+                return false;
+            });
+
+
+            $('form#stop1').submit(function(event) {
+                socket.emit('stop1');
+                return false;
+            });
+
+
+
+
+        });
+    </script>
+
+
+
+</body>
+</html>

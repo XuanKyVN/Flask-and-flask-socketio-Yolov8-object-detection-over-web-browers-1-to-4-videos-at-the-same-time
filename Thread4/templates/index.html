@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> flask websocket</title>
+
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 50%; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns*/
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+
+
+
+</head>
+<body>
+<div class="row">
+  <div class="column" >
+    <img id="image1">
+
+    <form id="start" method="POST" action="#">
+            <input type="submit" value="start">
+        </form>
+
+    <form id="stop" method="POST" action="#">
+            <input type="submit" value="stop">
+        </form>
+    </div>
+
+  <div class="column" >
+    <img id="image2">
+<form id="start1" method="POST" action="#">
+    <input type="submit" value="start1">
+    </form>
+
+<form id="stop1" method="POST" action="#">
+        <input type="submit" value="stop1">
+    </form>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="column" >
+    <img id="image3">
+
+    <form id="start2" method="POST" action="#">
+            <input type="submit" value="start2">
+        </form>
+
+    <form id="stop2" method="POST" action="#">
+            <input type="submit" value="stop2">
+        </form>
+    </div>
+
+  <div class="column" >
+    <img id="image4">
+<form id="start3" method="POST" action="#">
+    <input type="submit" value="start3">
+    </form>
+
+<form id="stop3" method="POST" action="#">
+        <input type="submit" value="stop3">
+    </form>
+
+  </div>
+</div>
+
+
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+     var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+     socket.on('connect' ,function()
+     {
+     	socket.emit('check' ,{data: 'User Connected'})
+     });
+     socket.on('image', function(msg)
+     {  
+        //console.log(image)
+        const image_element=document.getElementById('image1');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+     socket.on('image2', function(msg)
+     {
+        //console.log(image2)
+        const image_element=document.getElementById('image2');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+             socket.on('image3', function(msg)
+     {
+        //console.log(image3)
+        const image_element=document.getElementById('image3');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+     socket.on('image4', function(msg)
+     {
+        //console.log(image4)
+        const image_element=document.getElementById('image4');
+        image_element.src="data:image/jpeg;base64,"+msg;
+     });
+
+
+ </script>
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('form#start').submit(function(event) {
+                socket.emit('start');
+                return false;
+            });
+
+
+            $('form#stop').submit(function(event) {
+                socket.emit('stop');
+                return false;
+            });
+
+
+
+            $('form#start1').submit(function(event) {
+                socket.emit('start1');
+                return false;
+            });
+
+
+            $('form#stop1').submit(function(event) {
+                socket.emit('stop1');
+                return false;
+            });
+
+            //-------------------------
+
+            $('form#start2').submit(function(event) {
+                socket.emit('start2');
+                return false;
+            });
+
+
+            $('form#stop2').submit(function(event) {
+                socket.emit('stop2');
+                return false;
+            });
+
+
+
+            $('form#start3').submit(function(event) {
+                socket.emit('start3');
+                return false;
+            });
+
+
+            $('form#stop3').submit(function(event) {
+                socket.emit('stop3');
+                return false;
+            });
+
+
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
